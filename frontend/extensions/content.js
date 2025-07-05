@@ -93,7 +93,6 @@ function showRestoreDot(getProblemText) {
 async function fetchHint(problemText) {
   try {
     if (!chrome?.storage?.local) {
-      console.warn("❌ chrome.storage.local unavailable. Skipping cache.");
       return fetchFromServer(problemText);
     }
 
@@ -107,14 +106,13 @@ async function fetchHint(problemText) {
       }
     });
   } catch (err) {
-    console.error("❌ chrome.storage error:", err);
     showHintPopup("❌ Extension context invalid. Try reloading.");
   }
 }
 
 async function fetchFromServer(problemText) {
   try {
-    const res = await fetch("http://localhost:3000/api/hints", {
+    const res = await fetch("https://dsa-helper-chrome-extension-backend.onrender.com/api/hints", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ problemStatement: problemText }),
@@ -128,7 +126,6 @@ async function fetchFromServer(problemText) {
       showHintPopup("❌ Failed to fetch hint.", problemText);
     }
   } catch (err) {
-    console.error("❌ Server error:", err);
     showHintPopup("❌ Error fetching hint. Is backend running?", problemText);
   }
 }
