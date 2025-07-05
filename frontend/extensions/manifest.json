@@ -1,0 +1,37 @@
+
+{
+  "manifest_version": 3,
+  "name": "DSA Helper",
+  "version": "1.0",
+  "description": "Get smart AI-generated hints for DSA problems on platforms like LeetCode, GFG, and more.",
+  "permissions": [
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "action": {
+
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.leetcode.com/*",
+        "*://*.geeksforgeeks.org/*",
+        "*://*.hackerrank.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icon16.png", "icon48.png", "icon128.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
